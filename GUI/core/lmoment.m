@@ -1,0 +1,17 @@
+function re=lmoment(p,q,f)
+[r,c]=size(f);
+x=zeros(1,r);%x,y为图像坐标
+y=zeros(1,c);
+x=-1+1/r:2/r:1-1/r;%归一化
+y=-1+1/c:2/c:1-1/c;
+% x=linspace(-1,1,r);
+% y=linspace(-1,1,c);
+temp1=legendre(p,x);
+temp2=legendre(q,y);
+px=temp1(1,:);
+py=temp2(1,:);
+l=(px)'*py.*f*4/(r*c);
+t1=ones(1,r);
+t2=ones(c,1);
+l=t1*l*t2;
+re=(2*p+1)*(2*q+1)/4*l;

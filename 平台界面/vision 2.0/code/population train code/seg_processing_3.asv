@@ -1,0 +1,66 @@
+path_result = 'F:\DHJ\课题二\result2\';
+path_img = 'F:\DHJ\课题二\seg_match_data\';
+path_model = 'F:\DHJ\课题二\model\';
+path_seg_result = 'F:\DHJ\课题二\sgementtest\';
+% name = dir(path_img);
+% name(1) = [];
+% name(1) = [];
+
+name = [1,6,7,9,13,15,20,21,22,23];
+name = [1,6,7,9,13,15,20,21,22,23];
+
+num_model = 20;
+num_seg = 3 ;
+
+
+for i = 1:num_model
+    
+    path_save_dir = [path_result,'seg_data_',num2str(i)];
+    disp(['save dir:',path_save_dir])
+    
+    if ~exist(path_save_dir,'dir')
+       mkdir(path_save_dir);
+    end
+    path_save_dir = [path_save_dir,'\'];
+    
+%     load([path_model,'pouplation_model_',num2str(i),'.mat'])
+      
+      
+    for j = 1:length(name)
+        
+        path_save_dir_img = [path_save_dir,'pat',num2str(name(j))];
+        disp(['create save dir:',path_save_dir_img])
+        if ~exist(path_save_dir_img,'dir')
+          mkdir(path_save_dir_img);
+        end
+        path_save_dir_img = [path_save_dir_img,'\'];
+        
+        path_seg = [path_img,'registration_',num2str(i),'\','pat',num2str(name(j)),'\'];
+        
+        
+        for k = 1:3
+            image = load_image([path_seg,'img',num2str(k),'.mat']);
+            disp('................................................................................................')
+            disp(['load model:',path_model,'pouplation_model_',num2str(i),'.mat'])
+            disp(['load img:',path_seg,'img',num2str(k),'.mat'])
+            
+            disp('segment beginning...')
+            disp(['seg:',path_seg,'img',num2str(k),'.mat','  ing...'])
+            
+            if ~exist([path_result,'registration_',num2str(i),'\','result_pat',name(j),'\','result_Day',num2str(k),'.mat'],'file')
+              
+%                 [temp_result, ~, ~] = predict_auto_context(image,model);
+%                 temp_result= 1;
+                path_save = [path_save_dir_img,'result_Day',num2str(k),'.mat'];
+%                 save(path_save,'temp_result');
+                disp(['save img:',path_save])
+                clear temp_result
+                
+            end
+            disp('................................................................................................')
+        end
+    end
+end
+
+
+get_result_segment(path_result,path_seg_result,name);
